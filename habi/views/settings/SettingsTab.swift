@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsTab: View {
-  var manager = HabiManager.shared
+  @EnvironmentObject var manager: HabiManager
   var body: some View {
-    Text("ah")
+    Text("Settings")
   }
 }
