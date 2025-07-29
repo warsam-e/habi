@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListTab: View {
-  @StateObject private var manager = HabiManager.shared
+  @EnvironmentObject var manager: HabiManager
 
   @State private var showingPrompt = false
   @State private var inputText = ""

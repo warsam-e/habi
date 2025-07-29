@@ -1,14 +1,15 @@
-//
-//  Item.swift
-//  habi
-//
-//  Created by war on 2025-07-28.
-//
+#if !canImport(UIKit)  // Only include for SPM/non-Xcode builds
+  import Foundation
+  import CoreData
 
-import Foundation
+  class HabiItem: NSManagedObject {
+    @NSManaged var id: UUID?
+    @NSManaged var name: String?
+    @NSManaged var icon_name: String?
 
-struct HabiItem {
-  var id: UUID = UUID()
-  var name: String
-  var icon_name: String
-}
+    // SPM doesn't generate fetchRequest, so add it manually
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<HabiItem> {
+      return NSFetchRequest<HabiItem>(entityName: "HabiItem")
+    }
+  }
+#endif

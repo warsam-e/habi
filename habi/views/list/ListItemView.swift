@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct ListItemView: View {
-  @StateObject private var manager = HabiManager.shared
+  @EnvironmentObject var manager: HabiManager
   var item: HabiItem
 
+  var name: String {
+    item.name ?? "Unknown"
+  }
+
+  var icon_name: String {
+    item.icon_name ?? "square"
+  }
+
   var deleteButtonLabel: some View { Label("Delete", systemImage: "trash") }
-  var deleteButton: some View {
+  func deleteButton(_ id: UUID) -> some View {
     Button(role: .destructive) {
-      manager.removeItem(item.id)
+      manager.removeItem(id)
     } label: {
       deleteButtonLabel
     }
@@ -22,16 +30,19 @@ struct ListItemView: View {
 
   var body: some View {
     HStack(spacing: 18) {
-      Image(systemName: item.icon_name)
+      Image(systemName: icon_name)
         .resizable()
         .frame(width: 24)
 
-      Text("\(item.name)")
+      Text("\(name)")
         .font(.title3)
     }
     .padding(EdgeInsets.init(top: 8, leading: 10, bottom: 8, trailing: 10))
     .swipeActions {
-      deleteButton
+      if item.id != nil {
+        deleteButton(item.id!)
+      }
+
     }
   }
 }

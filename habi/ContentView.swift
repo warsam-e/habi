@@ -6,23 +6,29 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
   var body: some View {
     TabView {
-      Tab("Today", systemImage: "text.rectangle.page") {
-        TodayTab()
-      }
-      Tab("List", systemImage: "rectangle.stack") {
-        ListTab()
-      }
-      Tab("Settings", systemImage: "gear") {
-        SettingsTab()
-      }
+      Tab("Today", systemImage: "text.rectangle.page") { TodayTab() }
+      Tab("List", systemImage: "rectangle.stack") { ListTab() }
+      Tab("Settings", systemImage: "gear") { SettingsTab() }
     }
   }
 }
 
-#Preview {
-  ContentView()
+// #Preview {
+//   ContentView()
+//   .environment()
+// }
+
+struct ContentViewPreview: PreviewProvider {
+  @StateObject static var manager = HabiManager(
+    context: PersistenceController.shared.container.viewContext)
+
+  static var previews: some View {
+    ContentView()
+      .environmentObject(manager)
+  }
 }
