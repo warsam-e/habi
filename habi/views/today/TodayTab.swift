@@ -10,6 +10,12 @@ import SwiftUI
 struct TodayTab: View {
   @EnvironmentObject var manager: HabiManager
 
+  var listView: some View {
+    ForEach(manager.items, id: \.id) { item in
+      TodayItemView(item: item)
+    }
+  }
+
   var body: some View {
     NavigationStack {
       List {
@@ -18,7 +24,7 @@ struct TodayTab: View {
             .foregroundColor(.secondary)
             .padding()
         } else {
-          Text("ah")
+          listView
         }
       }
       .navigationTitle(Text("Today"))

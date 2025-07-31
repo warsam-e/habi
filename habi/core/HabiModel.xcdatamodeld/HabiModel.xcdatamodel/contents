@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24279" systemVersion="25A5316i" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
-    <entity name="HabiItem" representedClassName="HabiItem" syncable="YES" codeGenerationType="class">
+    <entity name="HabiItem" representedClassName="HabiItem" syncable="YES">
+        <attribute name="created_at" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="icon_name" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="item_to_completed" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HabiItemCompleted" inverseName="completed_to_item" inverseEntity="HabiItemCompleted"/>
+    </entity>
+    <entity name="HabiItemCompleted" representedClassName="HabiItemCompleted" syncable="YES">
+        <attribute name="completed_at" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="completed_to_item" maxCount="1" deletionRule="Nullify" destinationEntity="HabiItem" inverseName="item_to_completed" inverseEntity="HabiItem"/>
     </entity>
 </model>

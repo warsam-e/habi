@@ -18,12 +18,13 @@ class HabiManager: ObservableObject {
     _fetchItems()
   }
 
-  func addItem(_ name: String) {
-    let icons = ["plus", "star", "heart", "checkmark"]
+  func addItem(name: String, iconName: String) {
+
     let newItem = HabiItem(context: context)
     newItem.id = UUID()
     newItem.name = name
-    newItem.icon_name = icons.randomElement() ?? "plus"
+    newItem.icon_name = iconName
+    newItem.created_at = Date()
     _saveContext()
     _fetchItems()
   }

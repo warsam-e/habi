@@ -5,8 +5,8 @@
 //  Created by war on 2025-07-28.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct ContentView: View {
   var body: some View {
@@ -17,11 +17,6 @@ struct ContentView: View {
     }
   }
 }
-
-// #Preview {
-//   ContentView()
-//   .environment()
-// }
 
 struct ContentViewPreview: PreviewProvider {
   @StateObject static var manager = HabiManager(
