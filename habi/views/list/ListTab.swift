@@ -10,21 +10,11 @@ import SwiftUI
 struct ListTab: View {
   @EnvironmentObject var manager: HabiManager
 
-  @State private var showingPrompt = false
-  @State private var inputText = ""
-
-  func addItem(_ name: String) {
-    manager.addItem(name)
-    inputText = ""
-  }
+  @State private var showingSheet = false
 
   var addButton: some View {
-    Button(action: { showingPrompt.toggle() }, label: { Image(systemName: "plus") })
-      .alert("Enter name", isPresented: $showingPrompt) {
-        TextField("Name", text: $inputText).textContentType(.name)
-        Button("Cancel", role: .cancel) {}
-        Button("Save") { addItem(inputText) }.disabled(inputText.isEmpty)
-      }
+    Button(action: { showingSheet.toggle() }, label: { Image(systemName: "plus") })
+      .sheet(isPresented: $showingSheet) { AddSheet(showingSheet: $showingSheet) }
   }
 
   var listView: some View {

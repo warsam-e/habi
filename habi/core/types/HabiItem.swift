@@ -1,15 +1,32 @@
-#if !canImport(UIKit)  // Only include for SPM/non-Xcode builds
-  import Foundation
-  import CoreData
+import CoreData
+import Foundation
 
-  class HabiItem: NSManagedObject {
-    @NSManaged var id: UUID?
-    @NSManaged var name: String?
-    @NSManaged var icon_name: String?
+@objc(HabiItem)
+public class HabiItem: NSManagedObject {
+  @NSManaged public var id: UUID?
+  @NSManaged public var name: String?
+  @NSManaged public var icon_name: String?
+  @NSManaged public var created_at: Date?
+  @NSManaged public var item_to_completed: NSSet?  // Use NSSet for Core Data
 
-    // SPM doesn't generate fetchRequest, so add it manually
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<HabiItem> {
-      return NSFetchRequest<HabiItem>(entityName: "HabiItem")
-    }
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<HabiItem> {
+    return NSFetchRequest<HabiItem>(entityName: "HabiItem")
   }
-#endif
+
+  public var completedItems: [HabiItemCompleted] {
+    let set = item_to_completed as? Set<HabiItemCompleted> ?? []
+    return Array(set)
+  }
+
+  public var isCompletedToday: Bool {
+    let date = Date()
+    for completed in completedItems {
+      if let completedDate = completed.completed_at {
+        if Calendar.current.isDate(completedDate, inSameDayAs: date) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+}
